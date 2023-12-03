@@ -55,7 +55,7 @@ impl Game {
                 .next()
                 .unwrap()
                 .split(';')
-                .map(|set_str| CubeSet::from_string(set_str))
+                .map(CubeSet::from_string)
                 .collect(),
         }
     }
