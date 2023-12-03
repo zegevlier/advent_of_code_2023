@@ -28,7 +28,7 @@ fn part_two(input: &str) -> u32 {
         .map(|line| {
             let mut idx = 0;
             let first = 'outer: loop {
-                let first_char = line.chars().nth(idx).unwrap();
+                let first_char = line.as_bytes()[idx] as char;
                 if first_char.is_numeric() {
                     break first_char;
                 }
@@ -41,7 +41,7 @@ fn part_two(input: &str) -> u32 {
             };
             idx = line.len() - 1;
             let last = 'outer: loop {
-                let last_char = line.chars().nth(idx).unwrap();
+                let last_char = line.as_bytes()[idx] as char;
                 if last_char.is_numeric() {
                     break last_char;
                 }
