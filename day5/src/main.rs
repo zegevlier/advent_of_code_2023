@@ -66,7 +66,7 @@ impl Almanac {
 }
 
 fn part_one(input: &str) -> u64 {
-    let mut input = input.split("\n\n");
+    let mut input = input.split("\r\n\r\n");
     let seeds: Vec<u64> = input
         .next()
         .unwrap()
@@ -85,7 +85,7 @@ fn part_one(input: &str) -> u64 {
 }
 
 fn part_two(input: &str) -> u64 {
-    let mut input = input.split("\n\n");
+    let mut input = input.split("\r\n\r\n");
     let seeds_ranges: Vec<(u64, u64)> = input
         .next()
         .unwrap()
