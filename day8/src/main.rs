@@ -54,7 +54,7 @@ fn id_to_u16(input: &str) -> u16 {
     out
 }
 
-fn part_two(input: &str) -> u32 {
+fn part_two(input: &str) -> u128 {
     let mut input = input.lines();
     let directions: Vec<_> = input
         .next()
@@ -84,31 +84,39 @@ fn part_two(input: &str) -> u32 {
         graph[source as usize] = FastNode { left, right };
     });
 
+    let mut loop_counts = vec![None; current_nodes.len()];
+
     let mut steps = 0;
-    let mut combined;
     let mut direction_idx = 0;
     loop {
         let direction = &directions[direction_idx % directions.len()];
         direction_idx += 1;
-        combined = u16::MAX;
 
-        #[allow(clippy::needless_range_loop)] // It's not actually needless here.
         for i in 0..current_nodes.len() {
-            combined &= current_nodes[i];
             let current_node = &graph[current_nodes[i] as usize];
+
+            if current_nodes[i] & 0b0111110000000000 == 0b0110100000000000 // This checks if the final letter is a Z.
+                && loop_counts[i].is_none()
+            {
+                loop_counts[i] = Some(steps);
+            }
+
             current_nodes[i] = match direction {
                 Direction::Left => current_node.left,
                 Direction::Right => current_node.right,
             };
         }
 
-        if combined & 0b0111110000000000 == 0b0110100000000000 {
+        if loop_counts.iter().all(Option::is_some) {
             break;
-        }
+        };
 
         steps += 1;
     }
-    steps
+
+    loop_counts
+        .iter()
+        .fold(1, |acc, i| num::integer::lcm(acc, i.unwrap()))
 }
 
 fn main() {
