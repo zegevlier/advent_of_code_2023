@@ -1,0 +1,8 @@
+[template]
+name = "day"
+version = "0.1.0"
+
+exclude = ["./target"]
+
+notes = """
+Good luck today!"""
